@@ -1,13 +1,13 @@
 package cn.starnine.bluetest.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -17,38 +17,24 @@ import java.io.IOException;
 import cn.starnine.bluetest.BlueConnect;
 import cn.starnine.bluetest.ConnectManger;
 import cn.starnine.bluetest.MyApplication;
-import cn.starnine.bluetest.ParseJson;
 import cn.starnine.bluetest.R;
 
 /**
  * 1个byte类型，1：linux命令 2：control
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private final static String TAG = MainActivity.class.getName();
-
+public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
+    private final static String TAG = FirstActivity.class.getName();
     ConnectManger connectManger=new ConnectManger();
-
-
-
-
-    private EditText et_msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_first);
         findViewById(R.id.button).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
-        findViewById(R.id.btn_send).setOnClickListener(this);
-        findViewById(R.id.btn_recive).setOnClickListener(this);
         findViewById(R.id.btn_tosecond).setOnClickListener(this);
-        et_msg = (EditText) findViewById(R.id.et_msg);
-
-
-
-
+        findViewById(R.id.btn_control).setOnClickListener(this);
     }
 
     Toast toast;
@@ -60,10 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toast.setText(str);
         toast.show();
     }
-
-
-
-
 
 BlueConnect.OnRecive onRecive=new BlueConnect.OnRecive() {
     @Override
@@ -79,7 +61,12 @@ Handler handler=new Handler(){
         toast(msg.obj.toString());
     }
 };
+    @Override
+    protected void onResume() {
 
+        ((MyApplication)getApplication()).getBlueConnect().setOnRecive(onRecive);
+        super.onResume();
+    }
     @Override
     public void onClick(View v) {
         String str;
@@ -110,29 +97,24 @@ Handler handler=new Handler(){
                     }
                 }
                 break;
-            case R.id.btn_send:
-                str = et_msg.getEditableText().toString().trim();
-                if (!str.equals(""))
-                    blueConnect.SendString(str);
-                break;
-            case R.id.btn_recive:
-                str = et_msg.getEditableText().toString().trim();
-                if (!str.equals("")){
-                    try {
-                        toast(ParseJson.buildJson());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
+
             case  R.id.btn_tosecond:
                 if(blueConnect!=null&&blueConnect.isConect()){
-                    Intent intent=new Intent(this,SecondActivity.class);
+                    Intent intent=new Intent(this,VoiceCenterActivity.class);
                     startActivity(intent);
                 }else{
                     toast("未连接");
                 }
                 break;
+            case R.id.btn_control:
+                if(blueConnect!=null&&blueConnect.isConect()){
+                    Intent intent=new Intent(this,ControlActivity.class);
+                    startActivity(intent);
+                }else{
+                    toast("未连接");
+                }
+                break;
+
         }
     }
 

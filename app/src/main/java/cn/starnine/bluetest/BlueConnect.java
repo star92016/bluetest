@@ -44,11 +44,6 @@ public class BlueConnect {
     }
     public void sendJsonObj(JSONObject jsonObject){
         String jstring=jsonObject.toString();
-        try {
-            jstring="########"+jstring.getBytes("utf-8").length+jstring;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         SendString(jstring);
     }
     OnRecive onRecive;
@@ -92,11 +87,7 @@ public class BlueConnect {
                 int size = inputStream.read(bytes);
                 String str=new String(bytes, 0, size, "UTF-8");
                 if(onRecive!=null){
-                    if(!str.startsWith("########"))
-                        continue;
-                    String body=getBody(str);
-                    Log.v("body",body);
-                    JSONObject jsonObject=new JSONObject(body);
+                    JSONObject jsonObject=new JSONObject(str);
                     onRecive.reciveJson(jsonObject);
                 }
             } catch (Exception e) {

@@ -16,7 +16,17 @@ public class ParseJson {
         try {
             JSONObject jsonObject=new JSONObject();
             jsonObject.put("type","shell");
-            jsonObject.put("shell",shell);
+            jsonObject.put("msg",shell);
+            blueConnect.sendJsonObj(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendAsound(String param){
+        try {
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("type","asound");
+            jsonObject.put("msg",param);
             blueConnect.sendJsonObj(jsonObject);
         } catch (Exception e) {
             e.printStackTrace();

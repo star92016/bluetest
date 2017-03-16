@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cn.starnine.bluetest.activity.SecondActivity">
+   >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,15 +51,11 @@
                 android:layout_height="wrap_content"
                 android:text="stop tomcat" />
             <Button
-                android:id="@+id/btn_add_wifi"
+                android:id="@+id/btn_wifiman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="add wifi" />
-            <Button
-                android:id="@+id/btn_load_wifi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="load wifi" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
